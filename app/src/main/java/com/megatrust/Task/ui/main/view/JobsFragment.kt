@@ -54,8 +54,4 @@ class JobsFragment : Fragment() {
 
         })
     }
-
-    fun OnClickListen(){
-        findNavController().navigate(R.id.action_SecondFragment_to_fragmentDetails)
-    }
 }
