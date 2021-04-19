@@ -35,6 +35,10 @@ android {
         dataBinding = true
         viewBinding = true
     }
+
+    packagingOptions {
+        exclude "DebugProbesKt.bin"
+    }
 }
 
 dependencies {

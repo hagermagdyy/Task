@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.megatrust.Task.MainActivity
 import com.megatrust.Task.R
 import com.megatrust.Task.data.api.ApiClient
+import com.megatrust.Task.data.api.RetrofitService
 import com.megatrust.Task.data.repository.MainRepository
 import com.megatrust.Task.databinding.FragmentSecondBinding
 import com.megatrust.Task.ui.base.MyViewModelFactory
@@ -27,7 +28,7 @@ import com.megatrust.Task.ui.main.viewmodel.JobsViewModel
 class JobsFragment : Fragment() {
 
     lateinit var viewModel: JobsViewModel
-    private val retrofitService = ApiClient.getInstance()
+    private val retrofitService = RetrofitService().getService()
     private val adapter = JobsAdapter()
     lateinit var binding: FragmentSecondBinding
 
@@ -45,11 +46,11 @@ class JobsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.JobList.observe( viewLifecycleOwner, Observer {
+        viewModel.Jobs.observe( viewLifecycleOwner, Observer {
             adapter.setjobslist(it)
         })
 
-        viewModel.errorMessage.observe(viewLifecycleOwner, Observer {
+        viewModel.jobsLoadError.observe(viewLifecycleOwner, Observer {
 
         })
     }

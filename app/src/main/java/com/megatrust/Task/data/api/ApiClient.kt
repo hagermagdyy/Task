@@ -10,22 +10,5 @@ import retrofit2.http.GET
 interface ApiClient {
 
     @GET("positions.json?description=api")
-    fun getJobs(): Call<List<model.ResponseItem>>
-
-    companion object {
-
-        var retrofitService: ApiClient? = null
-
-        fun getInstance() : ApiClient {
-
-            if (retrofitService == null) {
-                val retrofit = Retrofit.Builder()
-                    .baseUrl("https://jobs.github.com/")
-                    .addConverterFactory(GsonConverterFactory.create())
-                    .build()
-                retrofitService = retrofit.create(ApiClient::class.java)
-            }
-            return retrofitService!!
-        }
-    }
+    suspend fun getJobs(): Response<List<model.ResponseItem>>
 }

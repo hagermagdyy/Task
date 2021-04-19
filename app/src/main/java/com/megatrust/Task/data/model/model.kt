@@ -13,37 +13,37 @@ class model {
     data class ResponseItem(
 
         @field:SerializedName("company_logo")
-        val companyLogo: String? = null,
+        val companyLogo: String? = "",
 
         @field:SerializedName("how_to_apply")
-        val howToApply: String? = null,
+        val howToApply: String? = "",
 
         @field:SerializedName("created_at")
-        val createdAt: String? = null,
+        val createdAt: String? = "",
 
         @field:SerializedName("description")
-        val description: String? = null,
+        val description: String? = "",
 
         @field:SerializedName("company")
-        val company: String? = null,
+        val company: String? = "",
 
         @field:SerializedName("company_url")
-        val companyUrl: String? = null,
+        val companyUrl: String? = "",
 
         @field:SerializedName("location")
-        val location: String? = null,
+        val location: String? = "",
 
         @field:SerializedName("id")
-        val id: String? = null,
+        val id: String? = "",
 
         @field:SerializedName("type")
-        val type: String? = null,
+        val type: String? = "",
 
         @field:SerializedName("title")
-        val title: String? = null,
+        val title: String? = "",
 
         @field:SerializedName("url")
-        val url: String? = null
+        val url: String? = ""
     )
 
 }

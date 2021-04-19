@@ -21,6 +21,7 @@ class JobsAdapter : RecyclerView.Adapter<MainViewHolder>(){
     var navController: NavController? = null
 
     var jobs = mutableListOf<model.ResponseItem>()
+
     fun setjobslist(movies: List<model.ResponseItem>) {
         this.jobs = movies.toMutableList()
         notifyDataSetChanged()
