@@ -1,37 +1,46 @@
 package com.megatrust.Task.ui.main.view
 
+import android.content.Context.MODE_PRIVATE
+import android.content.SharedPreferences
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.navArgs
-import com.megatrust.Task.R
+import com.bumptech.glide.Glide
 import com.megatrust.Task.databinding.FragmentDetailsBinding
-import com.megatrust.Task.databinding.FragmentSecondBinding
+
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [FragmentDetails.newInstance] factory method to
- * create an instance of this fragment.
- */
 class FragmentDetails : Fragment() {
 
-    // TODO: Rename and change types of parameters
 
     private val args: FragmentDetailsArgs by navArgs()
+    var Id: String = ""
+    var Logo: String = ""
+    var Url: String = ""
+    var Date: String = ""
+    var How_to_Apply: String = ""
+    var name:String = ""
 
     lateinit var binding: FragmentDetailsBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-//            id = it.getString(ARG_PARAM1)
         }
+
+        val pref: SharedPreferences =
+            requireActivity().getSharedPreferences("MyPref", MODE_PRIVATE)
+        Id = pref.getString("ID", "").toString()
+        Logo = pref.getString("Image", "").toString()
+        How_to_Apply = pref.getString("how_to_apply", "").toString()
+        Url = pref.getString("Company_url", "").toString()
+        Date = pref.getString("Created_at", "").toString()
+        name = pref.getString("Company", "").toString()
+
     }
 
     override fun onCreateView(
@@ -41,27 +50,22 @@ class FragmentDetails : Fragment() {
         // Inflate the layout for this fragment
         binding = FragmentDetailsBinding.inflate(layoutInflater)
 
-//        binding.id.text = id;
-
+        Glide.with(requireActivity()).load(Logo).into(binding.companyLogo)
+        binding.comapnyName.text = name
+        binding.companyUrl.text = Url
+        binding.createdAt.text = Date
+        binding.howToApply.text = How_to_Apply
         return binding.root
     }
 
     companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment FragmentDetails.
-         */
+
         // TODO: Rename and change types and number of parameters
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
             FragmentDetails().apply {
                 arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+
                 }
             }
     }

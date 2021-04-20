@@ -13,10 +13,12 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.megatrust.Task.MainActivity
+import com.megatrust.Task.MyApplication
 import com.megatrust.Task.R
 import com.megatrust.Task.data.api.ApiClient
 import com.megatrust.Task.data.api.RetrofitService
 import com.megatrust.Task.data.repository.MainRepository
+import com.megatrust.Task.data.room.AppDatabase
 import com.megatrust.Task.databinding.FragmentSecondBinding
 import com.megatrust.Task.ui.base.MyViewModelFactory
 import com.megatrust.Task.ui.main.adapter.JobsAdapter
@@ -26,6 +28,8 @@ import com.megatrust.Task.ui.main.viewmodel.JobsViewModel
  * A simple [Fragment] subclass as the second destination in the navigation.
  */
 class JobsFragment : Fragment() {
+
+
 
     lateinit var viewModel: JobsViewModel
     private val retrofitService = RetrofitService().getService()
@@ -37,6 +41,10 @@ class JobsFragment : Fragment() {
             savedInstanceState: Bundle?
     ): View? {
         binding = FragmentSecondBinding.inflate(layoutInflater)
+
+         val database = AppDatabase.getAppDataBase(MyApplication.getContext())?.JobDAO()
+//         val jobEntity = database?.JobDAO()
+
         viewModel = ViewModelProvider(this, MyViewModelFactory(MainRepository(retrofitService))).get(JobsViewModel::class.java)
         val jobList: RecyclerView = binding.recyclerview
         jobList.adapter = adapter
@@ -46,12 +54,17 @@ class JobsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.Jobs.observe( viewLifecycleOwner, Observer {
+        viewModel.jobsList.observe( viewLifecycleOwner, Observer {
+            Log.d("FetchDAta", " " + it.get(0).company )
             adapter.setjobslist(it)
         })
 
-        viewModel.jobsLoadError.observe(viewLifecycleOwner, Observer {
+        viewModel.fetch()
+//
+//        viewModel.jobsLoadError.observe(viewLifecycleOwner, Observer {
+//
+//        })
 
-        })
+
     }
 }

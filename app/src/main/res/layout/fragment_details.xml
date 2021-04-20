@@ -1,15 +1,66 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     android:background="@color/Background"
     tools:context=".ui.main.view.FragmentDetails">
 
+    <ImageView
+        android:id="@+id/company_logo"
+        android:layout_width="match_parent"
+        android:layout_height="180dp"
+        tools:srcCompat="@tools:sample/avatars" />
+
     <TextView
-        android:id="@+id/id"
+        android:id="@+id/comapny_name"
+        android:layout_width="wrap_content"
+        android:layout_gravity="center"
+        android:layout_height="wrap_content"
+        android:fontFamily="sans-serif-black"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="20dp"
+        android:text="TextView"
+        android:textSize="20dp"
+        android:layout_marginLeft="10dp" />
+
+    <TextView
+        android:id="@+id/company_url"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="ID"
-/>
-</FrameLayout>
+        android:layout_gravity="center"
+        android:fontFamily="sans-serif-black"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="20dp"
+        android:text="TextView"
+        android:textSize="20dp"
+        android:layout_marginLeft="10dp" />
+
+    <TextView
+        android:id="@+id/created_at"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="4dp"
+        android:fontFamily="sans-serif-black"
+        android:layout_gravity="center"
+        android:textSize="20dp"
+        android:layout_marginStart="10dp"
+        android:text="TextView"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="10dp" />
+
+    <TextView
+        android:id="@+id/how_to_apply"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="4dp"
+        android:fontFamily="sans-serif-black"
+        android:layout_gravity="center"
+        android:textSize="20dp"
+        android:layout_marginStart="10dp"
+        android:text="TextView"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="10dp" />
+
+</LinearLayout>

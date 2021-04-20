@@ -1,19 +1,23 @@
 package com.megatrust.Task.ui.main.viewmodel
 
+import android.app.Application
 import android.util.Log
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import com.megatrust.Task.data.api.ApiClient
+import androidx.lifecycle.*
+import androidx.paging.LivePagedListBuilder
+import androidx.paging.PagedList
+import com.megatrust.Task.MyApplication
 import com.megatrust.Task.data.api.RetrofitService
 import com.megatrust.Task.data.model.model
 import com.megatrust.Task.data.repository.MainRepository
+import com.megatrust.Task.data.room.AppDatabase
+import com.megatrust.Task.data.room.JobDAO
+import com.megatrust.Task.data.room.JobEntity
 import kotlinx.coroutines.*
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 
 class JobsViewModel constructor(private val repository: MainRepository)  : ViewModel()  {
 
+
+    private val jobDao: JobDAO = AppDatabase.getAppDataBase(MyApplication.getContext())!!.JobDAO()
     val JobService = RetrofitService().getService()
     var job: Job? = null
     val exceptionHandler = CoroutineExceptionHandler { coroutineContext, throwable ->
@@ -22,13 +26,42 @@ class JobsViewModel constructor(private val repository: MainRepository)  : ViewM
     val Jobs = MutableLiveData<List<model.ResponseItem>>()
     val jobsLoadError = MutableLiveData<String?>()
     val loading = MutableLiveData<Boolean>()
+    var jobsList = MutableLiveData<List<JobEntity>>()
 
     init {
-        fetchJobs()
+        //fetchJobs()
+        insert(JobEntity(3, "hager", "hager", "tanta", "hager", "hager", "mostafa", "tanta", "female", "title", "url", false))
+//        jobsList = jobDao.AllJobs
+    }
+
+
+    fun fetch(){
+
+        CoroutineScope(Dispatchers.IO).launch {
+
+            Log.i("Fetch_data_name", " " + jobDao.AllJobs().get(0).company)
+            Log.i("Fetch_data", " " + jobsList.value?.size)
+
+            jobsList.value = jobDao.AllJobs()
+        }
     }
 
     fun refresh() {
-        fetchJobs()
+       // fetchJobs()
+    }
+
+    fun insert( jobs: JobEntity) {
+        CoroutineScope(Dispatchers.IO).launch {
+            jobDao.insertJob(jobs)
+        }
+    }
+
+    fun update(jobs: JobEntity) {
+        jobDao.UpdateFavorite(jobs)
+    }
+
+    fun deleteEntity(jobs: JobEntity) {
+        jobDao.deleteJob(jobs)
     }
 
      private fun fetchJobs() {
@@ -41,13 +74,11 @@ class JobsViewModel constructor(private val repository: MainRepository)  : ViewM
                 if (response.isSuccessful) {
                     Jobs.value = response.body()
                     jobsLoadError.value = null
-                    Log.d("Fetch_Jobs", "fetchJobs: Success" + response.body()?.get(0))
-                    Log.d("Fetch_Jobs", "fetchJobs: " + response.errorBody())
                     loading.value = false
+
                 } else {
                     onError("Error : ${response.message()} ")
                     Log.d("Fetch_Jobs", "fetchJobs: Error" + response.body() )
-
                 }
             }
         }
